@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Task Overview:
+The goal was to create a dynamic Hashtag Sentiment Insight page using Next.js, TypeScript, Material UI, and @mui/x-charts. The page should display sentiment data for a hashtag in an interactive chart.
 
-## Getting Started
+Approach:
+- Project Setup:
 
-First, run the development server:
+I began by setting up a Next.js project with TypeScript and installing the required dependencies, including Material UI for styling and @mui/x-charts for the charting library.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Creating the Dynamic Route (/insights/[hashtag]):
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- I created a dynamic route ([hashtag].tsx) to allow the page to be accessed for any hashtag, making it flexible and reusable for different hashtags.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- I used Next.js dynamic routing with useRouter to retrieve the hashtag parameter from the URL.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Fetching Data (Mocked API):
 
-## Learn More
+I implemented a mocked API (/api/trends/[hashtag]) to simulate fetching sentiment data for a given hashtag.
 
-To learn more about Next.js, take a look at the following resources:
+The API returns sentiment data for a range of dates, which is displayed on the chart.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+I used React's useState and useEffect hooks to manage the data fetching and state updates.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Displaying the Data:
 
-## Deploy on Vercel
+I created a HashtagTrendCard component to display the data in a styled Material UI card.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The chart was rendered using @mui/x-charts/LineChart. I displayed the sentiment trend with the date on the x-axis and sentiment value on the y-axis.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Performance Optimization (React Memoization):
+
+I optimized the chart rendering using React.memo to avoid unnecessary re-renders of the chart component.
+
+I also used useMemo to optimize the processing of trend data (x and y values) for the chart.
+
+- Handling Loading and Error States:
+
+I implemented a loading spinner using Material UI’s CircularProgress to indicate when data is being fetched.
+
+I also added error handling with a retry button, allowing the user to retry fetching data in case of an error.
+
+- Making the Page Mobile-Responsive:
+
+I ensured that the layout of the page and chart was responsive by using Material UI's responsive design system (sx, Box, etc.).
+
+The chart dynamically adjusts its width based on the screen size to maintain good visibility on both mobile and desktop devices.
+
+- Implementing Optional Features (Bonus):
+
+I added a dropdown to switch hashtags dynamically, which allows users to switch between different hashtags for sentiment analysis.
+
+I made the chart interactive by enabling zoom/pan functionality (using chart properties).
+
+I displayed min/max sentiment markers below the chart as additional insights.
+
+I added dark mode support with a toggle button that switches the theme.
+
+I used next/dynamic to lazily load the chart for better performance.
